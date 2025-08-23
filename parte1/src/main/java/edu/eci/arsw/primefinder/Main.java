@@ -1,8 +1,10 @@
 package edu.eci.arsw.primefinder;
 
+import java.util.Scanner;
+
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		int max = 500000000;
         int part = max / 3;
 
@@ -13,6 +15,22 @@ public class Main {
         pft1.start();
         pft2.start();
         pft3.start();
+
+		Thread.sleep(5000);
+		pft1.pauseThread();
+		pft2.pauseThread();
+		pft3.pauseThread();
+
+		Scanner scanner = new Scanner(System.in);
+
+		String input = scanner.nextLine();
+
+		if (input.isEmpty()){
+			pft1.resumeThread();
+			pft2.resumeThread();
+			pft3.resumeThread();
+		}
+
     }
-	
+
 }
