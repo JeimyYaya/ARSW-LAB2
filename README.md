@@ -3,16 +3,17 @@ Escuela Colombiana de Ingeniería
 Arquitecturas de Software – ARSW
 -  Jeimy Yaya
 
-#### Taller – programación concurrente, condiciones de carrera y sincronización de hilos. EJERCICIO INDIVIDUAL O EN PAREJAS.
 
-##### Parte I 
+## Parte I 
 
 Creación, puesta en marcha y coordinación de hilos.
 
 1. Revise el programa “primos concurrentes” (en la carpeta parte1), dispuesto en el paquete edu.eci.arsw.primefinder. Este es un programa que calcula los números primos entre dos intervalos, distribuyendo la búsqueda de los mismos entre hilos independientes. Por ahora, tiene un único hilo de ejecución que busca los primos entre 0 y 30.000.000. Ejecútelo, abra el administrador de procesos del sistema operativo, y verifique cuantos núcleos son usados por el mismo.   
 
-- Podemo evidenciar que se estan usando 5 núcleos al ejecutar el proceso.   
-![alt text](img/image.png)   
+- Podemos evidenciar que se estan usando 5 núcleos al ejecutar el proceso. (Cuando uno de los nucleos baja otro lo sustituye, por eso son 4)
+<p align="center">
+<img width="" height="500" alt="image" src="img/image.png" />
+</p>
 
 
 2. Modifique el programa para que, en lugar de resolver el problema con un solo hilo, lo haga con tres, donde cada uno de éstos hará la tarcera parte del problema original. Verifique nuevamente el funcionamiento, y nuevamente revise el uso de los núcleos del equipo.
@@ -35,16 +36,28 @@ public class Main {
     }
 	
 }
+<<<<<<< HEAD
 ```   
 - En este caso se evidencia el uso de 4 nucleos.   
 ![alt text](img/image1.png)   
+=======
+```
+- En este caso también se evidencia el uso de 4 núcleos.   
+<p align="center">
+<img width="" height="500" alt="image" src="img/image1.png" />
+</p>   
+>>>>>>> 6d5b23a25ad3fa985a835ee4b61874b2bbc21b99
 
 3. Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo.
 
 
 
+<<<<<<< HEAD
 
 #####Parte II 
+=======
+## Parte II 
+>>>>>>> 6d5b23a25ad3fa985a835ee4b61874b2bbc21b99
 
 
 Para este ejercicio se va a trabajar con un simulador de carreras de galgos (carpeta parte2), cuya representación gráfica corresponde a la siguiente figura:
