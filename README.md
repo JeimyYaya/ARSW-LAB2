@@ -10,7 +10,7 @@ Creación, puesta en marcha y coordinación de hilos.
 
 1. Revise el programa “primos concurrentes” (en la carpeta parte1), dispuesto en el paquete edu.eci.arsw.primefinder. Este es un programa que calcula los números primos entre dos intervalos, distribuyendo la búsqueda de los mismos entre hilos independientes. Por ahora, tiene un único hilo de ejecución que busca los primos entre 0 y 30.000.000. Ejecútelo, abra el administrador de procesos del sistema operativo, y verifique cuantos núcleos son usados por el mismo.   
 
-- Podemos evidenciar que se estan usando 5 núcleos al ejecutar el proceso. (Cuando uno de los nucleos baja otro lo sustituye, por eso son 4)
+- Podemos evidenciar que se estan usando 4 núcleos al ejecutar el proceso. (Cuando uno de los nucleos baja otro lo sustituye, por eso son 4)
 <p align="center">
 <img width="" height="500" alt="image" src="img/image.png" />
 </p>
@@ -36,29 +36,92 @@ public class Main {
     }
 	
 }
-<<<<<<< HEAD
-```   
-- En este caso se evidencia el uso de 4 nucleos.   
-![alt text](img/image1.png)   
-=======
 ```
+
 - En este caso también se evidencia el uso de 4 núcleos.   
 <p align="center">
 <img width="" height="500" alt="image" src="img/image1.png" />
 </p>   
->>>>>>> 6d5b23a25ad3fa985a835ee4b61874b2bbc21b99
+
 
 3. Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo.
 
+- Se añadió un atributo para determinar cuando pausar los hilos. Luego se editó el metodo **run()** para que se valide si el hilo esta "pausado". Finalmente se crean los metodos **pauseThread()** y **resumeThread()** para pausar y reanudar los hilos:
+
+```
+public PrimeFinderThread(int a, int b) {
+		super();
+		this.a = a;
+		this.b = b;
+		this.paused = false;
+	}
+
+	public void run(){
+
+		for (int i=a;i<=b;i++){	
+			synchronized (this) {
+				while (paused) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}				
+			if (isPrime(i)){
+				primes.add(i);
+				System.out.println(i);
+			}
+		}
+	}
 
 
-<<<<<<< HEAD
+	public void pauseThread(){
+		paused = true;
 
-#####Parte II 
-=======
+	}
+
+	public void resumeThread() {
+        paused = false;
+        synchronized (this) {
+            notify();
+	}
+```
+- En la clase main generamos un ciclo para que cada 5 segundos los hilos se pausen y cuando se oprima **ENTER** reanuden:
+```
+public static void main(String[] args) throws InterruptedException {
+		int max = 500000000;
+        int part = max / 3;
+
+        PrimeFinderThread pft1 = new PrimeFinderThread(0, part);
+        PrimeFinderThread pft2 = new PrimeFinderThread(part + 1, 2 * part);
+        PrimeFinderThread pft3 = new PrimeFinderThread(2 * part + 1, max);
+
+        pft1.start();
+        pft2.start();
+        pft3.start();
+
+		Scanner scanner = new Scanner(System.in);
+		
+		while (pft1.isAlive() || pft2.isAlive() || pft3.isAlive()) {
+			Thread.sleep(5000);
+			pft1.pauseThread();
+			pft2.pauseThread();
+			pft3.pauseThread();
+
+			String input = scanner.nextLine();
+
+			if (input.isEmpty()){
+				pft1.resumeThread();
+				pft2.resumeThread();
+				pft3.resumeThread();
+			}
+		}	
+
+    }
+```
+
 ## Parte II 
->>>>>>> 6d5b23a25ad3fa985a835ee4b61874b2bbc21b99
-
 
 Para este ejercicio se va a trabajar con un simulador de carreras de galgos (carpeta parte2), cuya representación gráfica corresponde a la siguiente figura:
 
