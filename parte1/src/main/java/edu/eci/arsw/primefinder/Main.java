@@ -16,20 +16,22 @@ public class Main {
         pft2.start();
         pft3.start();
 
-		Thread.sleep(5000);
-		pft1.pauseThread();
-		pft2.pauseThread();
-		pft3.pauseThread();
-
 		Scanner scanner = new Scanner(System.in);
+		
+		while (pft1.isAlive() || pft2.isAlive() || pft3.isAlive()) {
+			Thread.sleep(5000);
+			pft1.pauseThread();
+			pft2.pauseThread();
+			pft3.pauseThread();
 
-		String input = scanner.nextLine();
+			String input = scanner.nextLine();
 
-		if (input.isEmpty()){
-			pft1.resumeThread();
-			pft2.resumeThread();
-			pft3.resumeThread();
-		}
+			if (input.isEmpty()){
+				pft1.resumeThread();
+				pft2.resumeThread();
+				pft3.resumeThread();
+			}
+		}	
 
     }
 

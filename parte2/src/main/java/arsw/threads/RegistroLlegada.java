@@ -5,23 +5,23 @@ public class RegistroLlegada {
 	private int ultimaPosicionAlcanzada=1;
 
 	private String ganador=null;
-	
-	public String getGanador() {
-		return ganador;
+
+	public int registraLlegada(String nombreGalgo) {
+		int posicion;
+		synchronized (this) {
+			posicion = ultimaPosicionAlcanzada++;
+			if (posicion == 1) {
+			ganador = nombreGalgo;
+			}
+		}	
+		return posicion;
 	}
 
-	public void setGanador(String ganador) {
-		this.ganador = ganador;
+	public String getGanador() {
+		return ganador;
 	}
 
 	public int getUltimaPosicionAlcanzada() {
 		return ultimaPosicionAlcanzada;
 	}
-
-	public void setUltimaPosicionAlcanzada(int ultimaPosicionAlcanzada) {
-		this.ultimaPosicionAlcanzada = ultimaPosicionAlcanzada;
-	}
-
-	
-	
 }
